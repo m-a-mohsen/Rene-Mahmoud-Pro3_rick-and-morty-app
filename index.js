@@ -9,19 +9,23 @@ const nextButton = document.querySelector('[data-js="button-next"]');
 const pagination = document.querySelector('[data-js="pagination"]');
 
 // States
-const maxPage = 1;
-const page = 1;
+let maxPage = 1;
+let page = 1;
 const searchQuery = "";
 
 // fetch
-let url = "https://rickandmortyapi.com/api/character/";
+const url = "https://rickandmortyapi.com/api/character/";
 
-export async function fetchCharacters() {
+export async function fetchCharacters(anyUrl) {
   try {
-    const response = await fetch(url);
+    const response = await fetch(anyUrl);
     const data = await response.json();
-    console.log(data);
 
+    // ------------  update states ---------------
+    maxPage = data.info.pages;
+    console.log({ maxPage });
+    console.log(data);
+updatePageNumber();
     data.results.map((character) => {
       // console.log("All character data: ", character);
 
@@ -60,11 +64,44 @@ export async function fetchCharacters() {
         </div>
       </li>
       `;
+      
       cardContainer.insertAdjacentHTML("beforeEnd", createCard);
     });
   } catch (error) {
     console.log("error: ", error);
   }
 }
+// -------------------- Pagination ------------------
+// info object recived from fetch
 
-fetchCharacters();
+// {
+//   "info": {
+//     "count": 826,
+//     "pages": 42,
+//     "next": "https://rickandmortyapi.com/api/character/?page=11",
+//     "prev": "https://rickandmortyapi.com/api/character/?page=9"
+//   }
+
+nextButton.addEventListener("click", () =>{
+  page === maxPage ? page = 1 : page++
+updatePageNumber()
+  const costumUrl = `${url}?page=${page}`
+  console.log({ costumUrl });
+  cardContainer.innerHTML = "";
+  fetchCharacters(costumUrl);
+  console.log({page});}
+);
+prevButton.addEventListener("click", () =>{
+  page <= 1 ? page = 1 : page--
+  const costumUrl = `${url}?page=${page}`;
+  console.log({ costumUrl });
+  cardContainer.innerHTML = "";
+  fetchCharacters(costumUrl);
+  console.log({page});}
+);
+function updatePageNumber() {
+  pagination.innerHTML = ''
+  pagination.innerHTML = `${page} / ${maxPage}`
+}
+fetchCharacters(url);
+
