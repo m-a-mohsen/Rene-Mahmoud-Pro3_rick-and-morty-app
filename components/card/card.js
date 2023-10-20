@@ -10,6 +10,8 @@ export function createCharacterCard(
 the src of the image, the name of the character, the status, type and occurrences values
 */
 
+  // just a test
+
   const createCard = `
         <li class="card">
           <div class="card__image-container">
