@@ -27,13 +27,10 @@ export async function fetchCharacters() {
       // const characterName = character.name;
       const characterPicture = character.image;
       const characterName = character.name;
+      // status unknown
       const characterStatus = character.status;
-
-      // type is sometimes empty. what should we add? just "unknown"?
       const characterType = character.type;
-
-      // we need to count the numbers of episodes
-      // const characterOccurrences = count episodes Array;
+      const characterOccurrences = characterOccurrences.length;
       console.log(characterPicture);
       console.log(characterName);
       console.log(characterStatus);
