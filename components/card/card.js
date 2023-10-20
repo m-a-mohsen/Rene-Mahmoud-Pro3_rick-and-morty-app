@@ -9,9 +9,6 @@ export function createCharacterCard(
   The following elements of the card need to be dynamic and change for each character:
 the src of the image, the name of the character, the status, type and occurrences values
 */
-
-  // just a test
-
   const createCard = `
         <li class="card">
           <div class="card__image-container">

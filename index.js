@@ -22,21 +22,31 @@ export async function fetchCharacters() {
     const data = await response.json();
     console.log(data);
     data.results.map((character) => {
-      console.log(character);
+      console.log("All data: ", character);
 
-      // const characterName = character.name;
       const characterPicture = character.image;
       const characterName = character.name;
-      // status unknown
       const characterStatus = character.status;
       const characterType = character.type;
-      const characterOccurrences = characterOccurrences.length;
+      const characterOccurrences = character.episode.length;
+
       console.log(characterPicture);
       console.log(characterName);
       console.log(characterStatus);
       console.log(characterType);
+      console.log(characterOccurrences);
 
       // run function for card creation with all parameters
+      createCharacterCard(character);
+      const newCard = createCharacterCard(
+        characterPicture,
+        characterName,
+        characterStatus,
+        characterType,
+        characterOccurrences
+      );
+      // add created Card to html
+      cardContainer.appendChild(newCard);
     });
   } catch (error) {
     console.log("error: ", error);
