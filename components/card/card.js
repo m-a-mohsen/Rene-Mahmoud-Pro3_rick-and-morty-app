@@ -32,4 +32,5 @@ the src of the image, the name of the character, the status, type and occurrence
           </div>
         </li>
         `;
+  return createCard;
 }
