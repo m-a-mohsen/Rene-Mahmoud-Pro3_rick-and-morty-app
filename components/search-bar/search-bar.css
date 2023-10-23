@@ -1,5 +1,8 @@
 .search-bar-container {
   width: 300px;
+  margin: auto;
+  position: sticky;
+  top: 0;
 }
 
 .search-bar {

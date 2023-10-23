@@ -3,9 +3,11 @@
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   align-self: end;
+  justify-content: space-between;
 }
 
 .navigation__pagination {
   display: grid;
   place-items: center;
+  background: white;
 }
