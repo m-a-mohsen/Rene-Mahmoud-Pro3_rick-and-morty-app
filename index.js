@@ -132,6 +132,11 @@ async function search(searchQueryState) {
     if (data.error) {
       alert('noooooooooo')
     }
+    cardContainer.innerHTML = ""
+    maxPage = data.info.pages;
+    page = 1
+        searchPages = data.info.pages;
+    updatePageNumber()
     data.results.map((character) => {
       // console.log("All character data: ", character);
 
@@ -146,6 +151,7 @@ async function search(searchQueryState) {
       // console.log(characterStatus);
       // console.log(characterType);
       // console.log(characterOccurrences);
+      
 
       const createCard = `
       <li class="card">
@@ -170,7 +176,6 @@ async function search(searchQueryState) {
         </div>
       </li>
       `;
-      pagination.innerHTML = ""
       cardContainer.insertAdjacentHTML("beforeEnd", createCard);
     });
   }
