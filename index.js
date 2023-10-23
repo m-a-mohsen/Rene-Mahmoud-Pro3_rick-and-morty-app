@@ -13,9 +13,12 @@ let maxPage = 1;
 let page = 1;
 let searchQuery = "";
 let searchPages = 1;
-
+let nextPageUrl = "";
+let prevPageUrl = "";
 // fetch
 const url = "https://rickandmortyapi.com/api/character/";
+
+
 
 export async function fetchCharacters(anyUrl) {
   try {
@@ -25,8 +28,10 @@ export async function fetchCharacters(anyUrl) {
     // ------------  update states ---------------
     maxPage = data.info.pages;
     searchPages = data.info.pages;
-    console.log({ maxPage });
-    console.log(data);
+    // console.log({ maxPage });
+    // console.log(data);
+    nextPageUrl = data.info.next
+    prevPageUrl = data.info.prev
     updatePageNumber();
     data.results.map((character) => {
       // console.log("All character data: ", character);
@@ -85,20 +90,26 @@ export async function fetchCharacters(anyUrl) {
 //   }
 
 nextButton.addEventListener("click", () => {
+  if (nextPageUrl === null) {
+    return
+  }
   page === maxPage ? (page = 1) : page++;
   updatePageNumber();
-  const costumUrl = `${url}?page=${page}`;
-  console.log({ costumUrl });
+  // const costumUrl = `${url}?page=${page}`;
+  // console.log({ costumUrl });
   cardContainer.innerHTML = "";
-  fetchCharacters(costumUrl);
+  fetchCharacters(nextPageUrl);
   console.log({ page });
 });
 prevButton.addEventListener("click", () => {
+  if (prevPageUrl === null) {
+    return;
+  }
   page <= 1 ? (page = 1) : page--;
-  const costumUrl = `${url}?page=${page}`;
-  console.log({ costumUrl });
+  // const costumUrl = `${url}?page=${page}`;
+  // console.log({ costumUrl });
   cardContainer.innerHTML = "";
-  fetchCharacters(costumUrl);
+  fetchCharacters(prevPageUrl);
   console.log({ page });
 });
 function updatePageNumber() {
@@ -114,6 +125,8 @@ searchBar.addEventListener("submit", (event) => {
   console.log(inputQuery.query);
   searchQuery = inputQuery.query;
   search(searchQuery)
+  const costumUrl = `${url}?name=${searchQuery}`;
+  fetchCharacters(costumUrl)
   // pages >= 1 ? (page = pages) : page--;
   // const costumUrl = `${url}?name=${inputQuery.query}`;
   // console.log({ costumUrl });
@@ -135,7 +148,9 @@ async function search(searchQueryState) {
     cardContainer.innerHTML = ""
     maxPage = data.info.pages;
     page = 1
-        searchPages = data.info.pages;
+    searchPages = data.info.pages;
+        nextPageUrl = data.info.next;
+        prevPageUrl = data.info.prev;
     updatePageNumber()
     data.results.map((character) => {
       // console.log("All character data: ", character);
