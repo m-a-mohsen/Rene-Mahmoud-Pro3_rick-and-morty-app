@@ -29,4 +29,10 @@ main {
 
 .title {
   padding: 10px 0;
+  text-align: center;
+}
+
+.footer{
+  position: sticky;
+  bottom: 0;
 }
